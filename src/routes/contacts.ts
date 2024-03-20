@@ -5,6 +5,7 @@ const router: Router = express.Router();
 // Contact List Page
 router.get('/', (req: Request, res: Response) => {
     res.send('All contact details');
+    
 })
 
 // Add Contact 
