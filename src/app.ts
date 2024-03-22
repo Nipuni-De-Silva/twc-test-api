@@ -10,6 +10,9 @@ const loginRouter = require('./routes/auth/login');
 const logoutRouter = require('./routes/auth/logout');
 const registerRouter = require('./routes/auth/register');
 const contactRouter = require('./routes/contacts');
+import deleteContactRouter from './routes/contacts/delete';
+import newContactRouter from './routes/contacts/new';
+import editContactRouter from './routes/contacts/edit';
 
 const app:Application = express();
 const port = process.env.PORT || 8000;
@@ -46,3 +49,7 @@ app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
 app.use('/contacts', contactRouter);
+app.use('/contacts/new', newContactRouter);
+app.use('/contacts/edit', editContactRouter);
+app.use('/contacts/delete', deleteContactRouter);
+

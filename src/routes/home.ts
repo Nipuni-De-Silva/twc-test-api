@@ -1,21 +1,24 @@
 import express, { NextFunction, Request, Response, Router} from 'express';
-var cookieParser = require('cookie-parser');
-
+import getContacts from '../db/contact_operations/get';
 
 const router: Router = express.Router();
-router.use(cookieParser());
 
-// Welcome page
-router.get('/', (req: Request, res: Response, next: NextFunction) => {
-    // save cookie from response object after initial request to the server
-    res.cookie('name', "Nipuni", {maxAge: 30000});
-    res.send('Welcome - TWC Contact Portals');
+
+// Home page
+router.get('/', async (req: Request, res: Response, next: NextFunction) => {
+    console.log('Route: (/ | Home)')
+    // home (redirect) -> welcome or contacts
+    // welcome - if contacts = 0
+    // contacts - if contacts > 0
+
+    const contactLists = await getContacts(req.query.uid as string)
+    if( contactLists.length > 0){
+        res.redirect('/contacts');
+    } else {
+        res.redirect('/welcome');
+    }
 })
 
-router.get('/home', (req: Request, res: Response, next: NextFunction) => {
-    
-    res.send(req.cookies.name)
-})
 
 module.exports = router;
 

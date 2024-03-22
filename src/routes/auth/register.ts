@@ -1,65 +1,56 @@
 import express, { NextFunction, Request, Response, Router} from 'express';
-import mongoose from 'mongoose';
+import { register } from 'module'
 import addUser from '../../db/user_operation/add'
-
-// decode and encode jwt
+import checkUser from '../../db/user_operation/check'
 import generateToken from '../../utils/jwt/encode';
-// import verifyToken from '../../utils/jwt/decode';
+import validator from 'validator';
+import mongoose from 'mongoose';
 
 const router: Router = express.Router();
 
 
 // Register User (Post)
 router.post('/', async (req: Request, res: Response, next: NextFunction) => {
+    console.log('Route: (Register)')
     const email: string = req.body.email;
     const password: string = req.body.password;
 
     try {
 
-        // 1. generate token
-        const token = generateToken({ email, password });
+        // 1. validate user input
+        const isValidated: boolean = validator.isEmail(email);
+        if(isValidated) {
+            // 2. check if user already registered
+            const userStatus = await checkUser(email);
+            if (userStatus === 'Found'){
+                res.sendStatus(401);
+            } else {
+                // 3. generate token
+                const token = generateToken({ email, password });
 
-        // 2. save to mongodb
-        const user = await addUser(email, password);
-        // res.send("User created successfully!")
+                // 4. save to mongodb
+                const user = await addUser(email, password);
+                // res.send("User created successfully!")
 
+                // 5. res  with cookie+token
+                res.cookie('token', token);
 
-        // 3. res  with cookie+token
-        addToken(token, res);
-
-        // 4. redirect to home
-        res.redirect('/');
-
-        // res.send(token);
+                // 6. redirect to home
+                res.redirect('/');
+                
+            }
+        } else {
+            console.log('Invalid email');
+            res.sendStatus(401);
+        }
     } catch (e) {
-        res.status(500);
-        res.send('An error occurred while generating the token');
+        console.error(e);
+        res.sendStatus(500);
     }
 
 })
 
-function addToken(token: string, res: Response){
-    res.cookie('token', token);
-}
 
-// router.get('/verify', (req: Request, res: Response) => {
-
-//     try {
-//         const token = req.cookies.token;
-
-//         if (!token) {
-//             return res.sendStatus(401);
-//         }
-
-//         const result = verifyToken(token);
-
-//         res.send(result);
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Error occurred while verifying the token');
-//     }
-
-// })
 
 
 

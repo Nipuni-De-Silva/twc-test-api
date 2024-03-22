@@ -20,3 +20,5 @@ async function getUser(email: string, password: string){
         throw e;
     }
 }
+
+export default getUser;
