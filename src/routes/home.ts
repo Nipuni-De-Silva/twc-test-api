@@ -8,8 +8,7 @@ router.use(cookieParser());
 // Welcome page
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
     // save cookie from response object after initial request to the server
-    res.cookie('name', "Nipuni", {maxAge: 30000
-    });
+    res.cookie('name', "Nipuni", {maxAge: 30000});
     res.send('Welcome - TWC Contact Portals');
 })
 

@@ -11,7 +11,11 @@ interface UserCredentials {
 
 
 function generateToken(userCredentials: UserCredentials) {
-    return jwt.sign(userCredentials, secretKey);
+    try {
+        return jwt.sign(userCredentials, secretKey);
+    } catch(e) {
+        throw (e);
+    }
 }
 
 export default generateToken;
