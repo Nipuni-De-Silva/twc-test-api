@@ -1,5 +1,5 @@
 import express, { Application, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import * as dotenv from 'dotenv';
 import mongoose from 'mongoose';
 
 dotenv.config();
@@ -13,6 +13,8 @@ const contactRouter = require('./routes/contacts');
 import deleteContactRouter from './routes/contacts/delete';
 import newContactRouter from './routes/contacts/new';
 import editContactRouter from './routes/contacts/edit';
+
+import authMiddleware from './middleware/auth_middleware';
 
 const app:Application = express();
 const port = process.env.PORT || 8000;
@@ -42,6 +44,8 @@ app.listen(port, () => {
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
+
+app.use(authMiddleware);
 
 // Routes
 app.use('/', homeRouter);
