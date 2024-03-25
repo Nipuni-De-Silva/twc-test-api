@@ -1,8 +1,7 @@
-import User from '../model/user';
-import { ContactDetails } from './add';
+import User from "../model/user";
+import { ContactDetails } from "./add";
 
-
-import { Types } from 'mongoose';
+import { Types } from 'mongoose'
 
 async function updateContact(userID: string, contactID: string, contactDetails: ContactDetails) {
     const parentId = new Types.ObjectId(userID);

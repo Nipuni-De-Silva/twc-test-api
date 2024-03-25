@@ -5,17 +5,17 @@ const router: Router = express.Router();
 // Register User (Post)
 router.patch('/', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Route: (Contacts/edit)')
-  const uid: string = req.query.uid as string
+  const uid: string = req.uid as string
   const cid: string = req.query.cid as string
   try {
     await updateContact(
         uid, 
         cid, 
         {
-            fullName: req.body.full_name,
+            fullName: req.body.fullName,
             gender: req.body.gender,
             email: req.body.email,
-            phoneNumber: req.body.phobe
+            phoneNumber: req.body.phoneNumber
         }
     );
     res.sendStatus(200)

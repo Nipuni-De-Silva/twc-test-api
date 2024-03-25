@@ -1,6 +1,5 @@
-import mongoose from 'mongoose';
-
-const { Schema, model } = mongoose;
+import mongoose from "mongoose";
+const {Schema, model} = mongoose;
 
 const contactSchema = new Schema({
     fullName: String,
@@ -9,7 +8,8 @@ const contactSchema = new Schema({
     phoneNumber: String
 });
 
-
-// const Contact = model('Contact', contactSchema);
+//const Contact = model('Contact', contactSchema);
 
 export {contactSchema}
+
+//export default Contact

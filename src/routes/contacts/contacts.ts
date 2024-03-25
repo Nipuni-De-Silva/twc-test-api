@@ -5,14 +5,12 @@ const router: Router = express.Router();
 // Register User (Post)
 router.get('/', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Route: (Contacts)')
-  const uid: string = req.query.uid as string
+  const uid: string = req.uid as string
   try {
     const contactList = await getContacts(uid)
     res.send(contactList)
   } catch (e) {
-    console.error(e)
-    res.sendStatus(500)
-
+    res.status(401).json({ message: (e as Error).message });
   }
 });
 

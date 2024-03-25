@@ -10,7 +10,7 @@ function verifyToken(token: string){
         var decoded = jwt.verify(token, secretKey);
         return decoded;
     } catch(err){
-        console.log(err)
+        console.log('Token decode failed')
     }
 }
 

@@ -5,7 +5,7 @@ const router: Router = express.Router();
 // Register User (Post)
 router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
   console.log('Route: (Contacts/delete)')
-  const uid: string = req.query.uid as string
+  const uid: string = req.uid as string
   const cid: string = req.query.cid as string
   try {
     const contactList = await deleteContact(uid, cid)

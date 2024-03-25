@@ -1,4 +1,4 @@
-import User from '../model/user';
+import User from "../model/user";
 
 interface ContactDetails {
     fullName: string,
@@ -9,13 +9,15 @@ interface ContactDetails {
 
 async function addContact(userID: String, contactDetails: ContactDetails) {
     const user = await User.findById(userID);
-    if (user !== null) {
+    if (user != null) {
         user.contactList.push(contactDetails);
         await user.save();
     } else {
-        throw Error('User ID not found!')
+        throw Error('User ID not found !')
     }
+    
 }
+
 
 export {ContactDetails}
 
